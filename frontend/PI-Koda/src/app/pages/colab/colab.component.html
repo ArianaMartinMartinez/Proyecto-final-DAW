@@ -1,0 +1,87 @@
+<!-- MENU -->
+<div class="container d-flex justify-content-center">
+    <div class="bg-koda-pink-custom text-white text-center rounded m-2 p-3" style="width: 80vh;">
+        <form [formGroup]="colabForm" (ngSubmit)="onSubmit()" class="row">
+            <div class="col-5">
+                <ng-select [items]="shelters"
+                formControlName="shelter"
+                bindLabel="name"
+                placeholder="Elige la protectora"
+                ></ng-select>
+            </div>
+            <div class="col-5">
+                <ng-select [items]="actions"
+                formControlName="action"
+                bindLabel="name"
+                placeholder="Elige la acción para colaborar"
+                ></ng-select>
+            </div>
+            <div class="col-2">
+                <button type="submit" class="btn btn-koda-light">Confirmar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- TYPES OF ACTIONS -->
+<div class="container text-center">
+    <div class="row">
+        <div class="col card m-4 border-koda-red p-0">
+            <h5 class="card-header bg-koda-red border-koda-red text-koda-light">SOCIO</h5>
+            <div class="card-body">
+                <p>
+                    Ser socio en una protectora de animales es una forma importante de apoyar
+                    la labor que realizan estas organizaciones. Al convertirte en socio,
+                    estarás contribuyendo económicamente a la protección y el bienestar de los
+                    animales necesitados y ayudando a la organización a continuar sus esfuerzos
+                    en defensa de los derechos de los animales. 
+                </p>
+            </div>
+        </div>
+
+        <div class="col card m-4 border-koda-red p-0">
+            <h5 class="card-header bg-koda-red border-koda-red text-koda-light">VOLUNTARIO</h5>
+            <div class="card-body">
+                <p>
+                    Ser voluntario en una protectora de animales puede tener varios
+                    beneficios tanto para los animales como para los voluntarios mismos.
+                    Es una experiencia gratificante que puede permitirte ayudar a los
+                    animales necesitados, aprender nuevas habilidades, hacer una diferencia
+                    en la vida de los animales, conocer a otros amantes de los animales y
+                    mejorar tu comunidad.
+                </p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col card m-4 border-koda-red p-0">
+            <h5 class="card-header bg-koda-red border-koda-red text-koda-light">CASA DE ACOGIDA</h5>
+            <div class="card-body">
+                <p>
+                    Ser casa de acogida en una protectora de animales es una forma de ayudar
+                    a los animales necesitados de manera muy directa. Al convertirte en casa
+                    de acogida, estarás brindando temporalmente un hogar a un animal mientras
+                    espera ser adoptado. Podrás ayudarlo a socializar con otros animales y
+                    personas, enseñarle a comportarse bien en casa, y trabajar en la resolución
+                    de problemas de comportamiento que puedan tener.
+                </p>
+            </div>
+        </div>
+
+        <div class="col card m-4 border-koda-red p-0">
+            <h5 class="card-header bg-koda-red border-koda-red text-koda-light">DONATIVO PUNTUAL</h5>
+            <div class="card-body">
+                <p>
+                    Hacer un donativo puntual en una protectora de animales es una forma muy útil
+                    y directa de ayudar a los animales necesitados. Así estarás contribuyendo
+                    directamente a la alimentación, atención veterinaria y cuidado de los animales
+                    en la protectora. Las protectoras de animales no solo brindan atención y
+                    cuidado a los animales, sino que también ofrecen programas y servicios como
+                    esterilización, educación sobre el bienestar animal y programas de adopción.
+                    Al hacer un donativo puntual, estarás apoyando estos programas y servicios.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>

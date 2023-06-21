@@ -1,0 +1,68 @@
+<nav class="navbar navbar-expand-md bg-koda-imperial sticky-top">
+    <div class="container">
+        <a class="navbar-brand" routerLink="/home">
+            <img src="assets/koda_logo.png" alt="Logo" 
+                width="50" height="65"
+                class="d-inline-block align-top"
+            />
+        </a>
+        <button
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNav"
+            class="navbar-toggler"
+            aria-controls="navbarNav"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+        >
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse d-flex justify-content-between" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item m-3">
+                    <a routerLink="/adopt" routerLinkActive="active fw-bold bg-koda-red rounded" class="nav-link text-koda-light">Adopta</a>
+                </li>
+                <li class="nav-item m-3">
+                    <a routerLink="/shelters" routerLinkActive="active fw-bold bg-koda-red rounded" class="nav-link text-koda-light">Protectoras</a>
+                </li>
+                <li class="nav-item m-3">
+                    <a routerLink="/colab" routerLinkActive="active fw-bold bg-koda-red rounded" class="nav-link text-koda-light">Colabora</a>
+                </li>
+                <li class="nav-item m-3">
+                    <a routerLink="/blog" routerLinkActive="active fw-bold bg-koda-red rounded" class="nav-link text-koda-light">Blog</a>
+                </li>
+                <li class="nav-item m-3">
+                    <a routerLink="/about-us" routerLinkActive="active fw-bold bg-koda-red rounded" class="nav-link text-koda-light">Nosotros</a>
+                </li>
+            </ul>
+            <div>
+                <div class="dropdown">
+                    <button class="btn btn-koda-pink dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      {{user.name}}
+                    </button>
+                    <ul class="dropdown-menu">
+                      <li><a class="dropdown-item" routerLink="/profile">
+                        <i class="fa-regular fa-user"></i>
+                        Perfil
+                      </a></li>
+                      <li *ngIf="isShelterUser"><hr class="dropdown-divider"></li>
+                      <li *ngIf="isShelterUser"><a class="dropdown-item" routerLink="/my-shelter">
+                        <i class="fa-solid fa-paw"></i>
+                        Protectora
+                      </a></li>
+                      <li><hr class="dropdown-divider"></li>
+                      <li><a class="dropdown-item" routerLink="/favorites">
+                        <i class="fa-regular fa-heart"></i>
+                        Favoritos
+                      </a></li>
+                      <li><hr class="dropdown-divider"></li>
+                      <li (click)="logout()" class="dropdown-item">
+                        <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                        Cerrar sesión
+                      </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>

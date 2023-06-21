@@ -1,0 +1,59 @@
+<div class="container">
+    <div class="d-flex justify-content-center align-items-center">
+        <app-loader *ngIf="!hasLoaded; else adoptPage"></app-loader>
+    </div>
+    <ng-template #adoptPage>
+        <div class="d-flex flex-column">
+            <div class="row d-flex align-items-center justify-content-center">
+                <div class="container d-flex justify-content-center">
+                    <div class="bg-koda-pink-custom text-white text-center rounded m-2 p-3" style="width: 80vh;">
+                        <form [formGroup]="searchForm" (ngSubmit)="onSubmit()" class="row">
+                            <div class="col">
+                                <ng-select [items]="animalTypes"
+                                    formControlName="animalType"
+                                    bindLabel="name"
+                                    placeholder="Tipo de animal"
+                                ></ng-select>
+                            </div>
+                            <div class="col">
+                                <ng-select [items]="genders"
+                                formControlName="gender"
+                                bindLabel="name"
+                                placeholder="Género"
+                                ></ng-select>
+                            </div>
+                            <div class="col">
+                                <ng-select [items]="cities"
+                                formControlName="city"
+                                bindLabel="name"
+                                placeholder="Ciudad"
+                                ></ng-select>
+                            </div>
+                            <div class="col">
+                                <input type="text" formControlName="breed" class="form-control" id="breed" placeholder="Raza">
+                            </div>
+                            <div class="col">
+                                <button type="submit" class="btn btn-koda-light">Buscar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="row d-flex justify-content-center m-3">
+                <app-animal-card class="col d-flex mt-2 mb-2" 
+                    *ngFor="let animal of animals" 
+                    [photo]="animal.photo" [name]="animal.name" [city]="animal.shelter.city.name" 
+                    [id]="animal.id" [isFavorite]="favorites.includes(animal.id)" [animalType]="animal.animal_type"
+                    (favoriteSelected)="setFavorite($event)"
+                ></app-animal-card>
+                <div class="d-flex justify-content-center m-2">
+                    <pagination [totalItems]="totalAnimals" [itemsPerPage]="pageSize" 
+                        previousText="&lsaquo;" nextText="&rsaquo;"
+                        (pageChanged)="pageChanged($event)"
+                    ></pagination>
+                </div>
+            </div>
+        </div>
+
+    </ng-template>
+</div>

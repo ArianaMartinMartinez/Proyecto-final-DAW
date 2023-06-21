@@ -1,0 +1,198 @@
+<div class="container">
+  <div class="d-flex justify-content-center align-items-center">
+    <app-loader *ngIf="!hasLoaded; else myShelterPage"></app-loader>
+</div>
+<ng-template #myShelterPage>
+  <div class="container">
+    <div class="row d-flex justify-content-center">
+      <h1 class="text-center m-3">Mi protectora</h1>
+    </div>
+    <div class="d-flex flex-column justify-content-center align-items-center">
+      <div style="width: 50%;">
+        <form [formGroup]="shelterForm" class="needs-validation" novalidate (ngSubmit)="onSubmit()">
+          <div class="mb-3">
+            <label for="name" class="form-label">Nombre</label>
+            <input type="text" formControlName="name" class="form-control" [class.is-invalid]="sf['name'].errors">
+            <div *ngIf="sf['name'].invalid && (sf['name'].dirty || sf['name'])" class="mt-2 text-danger">
+              <small *ngIf="sf['name'].errors?.['required']">
+                El nombre es requerido
+              </small>
+              <small *ngIf="sf['name'].errors?.['minlength']">
+                Debe tener mínimo 3 caracteres
+              </small>
+              <small *ngIf="sf['name'].errors?.['pattern']">
+                Formato inválido
+              </small>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="email" class="form-label">Correo electrónico</label>
+            <input type="email" formControlName="email" class="form-control" [class.is-invalid]="sf['email'].errors">
+            <div *ngIf="sf['email'].invalid && (sf['email'].dirty || sf['email'])" class="mt-2 text-danger">
+              <small *ngIf="sf['email'].errors?.['required']">
+                El email es requerido
+              </small>
+              <small *ngIf="sf['email'].errors?.['email']">
+                Formato inválido
+              </small>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="city" class="form-label">Ciudad</label>
+            <ng-select [items]="cities"
+              formControlName="city"
+              bindLabel="name"
+              class="mb-3"
+              [class.is-invalid]="sf['city'].errors"
+            ></ng-select>
+            <div *ngIf="sf['city'].invalid && (sf['city'].dirty || sf['city'])" class="mt-2 text-danger">
+              <small *ngIf="sf['city'].errors?.['required']">
+                La ciudad es requerida
+              </small>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="photo" class="form-label">Foto (url)</label>
+            <input type="url" formControlName="photo" class="form-control">
+          </div>
+          <div class="mb-3">
+            <label for="description" class="form-label">Descripción</label>
+            <textarea class="form-control" formControlName="description" style="height: 10rem;" [class.is-invalid]="sf['description'].errors"></textarea>
+            <div *ngIf="sf['description'].invalid && (sf['description'].dirty || sf['description'])" class="mt-2 text-danger">
+              <small *ngIf="sf['description'].errors?.['required']">
+                La descripción es requerida
+              </small>
+              <small *ngIf="sf['description'].errors?.['minlength']">
+                Debe tener mínimo 10 caracteres
+              </small>
+              <small *ngIf="sf['description'].errors?.['maxlength']">
+                Debe tener máximo 600 caracteres
+              </small>
+            </div>
+          </div>
+  
+          <div class="d-flex justify-content-end">
+            <button type="submit" class="btn btn-koda-red text-koda-light">Editar</button>
+          </div>
+        </form>
+      </div>    
+    </div>
+    <div class="mb-3">
+      <hr class="text-koda-imperial">
+        
+      <div class="mb-3">
+        <button class="btn btn-koda-pink m-2" (click)="openCreateModal(createModal)">Añadir animal</button>
+      </div>
+      <div class="row d-flex justify-content-center">
+        <app-animal-card class="col d-flex mt-2 mb-2" 
+          *ngFor="let animal of shelter.animals" 
+          [photo]="animal.photo" [name]="animal.name" [city]="shelter.city.name" 
+          [id]="animal.id" [isFavorite]="favorites.includes(animal.id)" [animalType]="animal.animal_type"
+          (favoriteSelected)="setFavorite($event)"
+        ></app-animal-card>
+      </div>
+        
+      <ng-template #createModal>
+        <div class="modal-header">
+          <h4 class="modal-title pull-left">Añadir Animal</h4>
+          <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="createModalRef?.hide()">
+            <span aria-hidden="true" class="visually-hidden">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="createForm" class="needs-validation" novalidate (ngSubmit)="onSubmitCreate()">
+            <div class="mb-3">
+              <label for="name" class="form-label">Nombre del animal</label>
+              <input type="text" formControlName="name" class="form-control" id="name" [class.is-invalid]="cf['name'].errors">
+              <div *ngIf="cf['name'].invalid && (cf['name'].dirty || cf['name'])" class="mt-2 text-danger">
+                <small *ngIf="cf['name'].errors?.['required']">
+                  El nombre es requerido
+                </small>
+                <small *ngIf="cf['name'].errors?.['minlength']">
+                  Debe tener mínimo 3 caracteres
+                </small>
+                <small *ngIf="cf['name'].errors?.['pattern']">
+                  Formato inválido
+                </small>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="animalType" class="form-label">Tipo de animal</label>
+              <select formControlName="animalType" class="form-select" id="animalType" [class.is-invalid]="cf['animalType'].errors">
+                <option value="dog">Perro</option>
+                <option value="cat">Gato</option>
+                <option value="bird">Ave</option>
+                <option value="rodent">Roedor</option>
+              </select>
+              <div *ngIf="cf['animalType'].invalid && (cf['animalType'].dirty || cf['animalType'])" class="mt-2 text-danger">
+                <small *ngIf="cf['animalType'].errors?.['required']">
+                  El tipo de animal es requerido
+                </small>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="breed" class="form-label">Raza</label>
+              <input type="text" formControlName="breed" class="form-control" id="breed" [class.is-invalid]="cf['breed'].errors">
+              <div *ngIf="cf['breed'].invalid && (cf['breed'].dirty || cf['breed'])" class="mt-2 text-danger">
+                <small *ngIf="cf['breed'].errors?.['required']">
+                  La raza es requerida
+                </small>
+                <small *ngIf="cf['breed'].errors?.['minlength']">
+                  Debe tener mínimo 3 caracteres
+                </small>
+                <small *ngIf="cf['breed'].errors?.['pattern']">
+                  Formato inválido
+                </small>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="gender" class="form-label">Género</label>
+              <select class="form-select" formControlName="gender" id="gender" [class.is-invalid]="cf['gender'].errors">
+                <option value="male">Macho</option>
+                <option value="female">Hembra</option>
+              </select>
+              <div *ngIf="cf['gender'].invalid && (cf['gender'].dirty || cf['gender'])" class="mt-2 text-danger">
+                <small *ngIf="cf['gender'].errors?.['required']">
+                  El género es requerido
+                </small>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="dateBirth" class="form-label">Fecha de nacimiento</label>
+              <input type="date" formControlName="dateBirth" class="form-control" id="dateBirth" [class.is-invalid]="cf['dateBirth'].errors">
+              <div *ngIf="cf['dateBirth'].invalid && (cf['dateBirth'].dirty || cf['dateBirth'])" class="mt-2 text-danger">
+                <small *ngIf="cf['dateBirth'].errors?.['required']">
+                  La fecha de nacimiento es requerida
+                </small>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="photo" class="form-label">Foto (url)</label>
+              <input type="url" formControlName="photo" class="form-control" id="photo">
+            </div>
+            <div class="mb-3">
+              <label for="description" class="form-label">Descripción</label>
+              <textarea class="form-control" formControlName="description" id="description" style="height: 10rem" [class.is-invalid]="cf['description'].errors"></textarea>
+              <div *ngIf="cf['description'].invalid && (cf['description'].dirty || cf['description'])" class="mt-2 text-danger">
+                <small *ngIf="cf['description'].errors?.['required']">
+                  La descripción es requerida
+                </small>
+                <small *ngIf="cf['description'].errors?.['minlength']">
+                  Debe tener mínimo 10 caracteres
+                </small>
+                <small *ngIf="cf['description'].errors?.['maxlength']">
+                  Debe tener máximo 600 caracteres
+                </small>
+              </div>
+            </div>
+        
+            <div class="d-flex justify-content-end">
+              <button type="submit" class="btn btn-koda-red text-koda-light">Aceptar</button>
+            </div>
+          </form>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+</ng-template>
+</div>

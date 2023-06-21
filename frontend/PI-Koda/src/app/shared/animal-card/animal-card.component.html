@@ -1,0 +1,22 @@
+<div class="card border-koda-imperial" style="width: 18rem;">
+    <img src="{{photo}}" class="card-img-top" height="200" alt="Foto del animal">
+    <div class="card-body">
+      <h5 class="card-title text-center">
+        <i *ngIf="animalType==='dog'" class="fa-solid fa-dog text-koda-imperial"></i>
+        <i *ngIf="animalType==='cat'" class="fa-solid fa-cat text-koda-imperial"></i>
+        <i *ngIf="animalType==='bird'" class="fa-solid fa-feather-pointed text-koda-imperial"></i>
+        <i *ngIf="animalType==='rodent'" class="fa-solid fa-cheese text-koda-imperial"></i>
+        {{name}}
+      </h5>
+      <div class="row">
+        <div class="col-8">
+          <i class="fa-solid fa-location-dot text-koda-red"></i>
+          <span class="card-text m-2">{{city}}</span>
+        </div>
+        <div class="col-4 text-end fs-4" (click)="favorite(id)" style="cursor:pointer;">
+          <i class="{{isFavorite ? 'fa-solid' : 'fa-regular'}} fa-heart text-koda-pink"></i>
+        </div>
+      </div>
+      <a [routerLink]="['/adopt', id]" class="btn btn-koda-red text-koda-light">Más información</a>
+    </div>
+</div>

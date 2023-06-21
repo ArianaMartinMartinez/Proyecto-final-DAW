@@ -1,0 +1,178 @@
+<div class="container">
+  <app-loader *ngIf="!hasLoaded; else detailPage" class="d-flex justify-content-center"></app-loader>
+  <ng-template #detailPage>
+    <div class="row">
+      <div class="col d-flex justify-content-center m-3">
+        <div class="col-6 d-flex justify-content-center align-items-center">
+          <img src="{{photo}}" height="200" alt="Foto del animal">
+        </div>
+        <div class="col-6 d-flex flex-column justify-content-center">
+          <h2>{{animal.name}}</h2>
+          <div class="row">
+            <div class="col-8">
+              <i class="fa-solid fa-location-dot text-koda-red"></i>
+              <span class="card-text m-2">{{animal.shelter.city.name}}</span>
+            </div>
+            <div class="col-4 text-end fs-4" (click)="setFavorite(animal.id)" style="cursor:pointer;">
+              <i class="{{isFavorite ? 'fa-solid' : 'fa-regular'}} fa-heart text-koda-pink"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col d-flex justify-content-center m-3 text-center">
+        <div class="card" style="width: 25rem;">
+          <img src="{{shelterPhoto}}" height="200" class="card-img-top" alt="Foto de la protectora">
+          <div class="card-body">
+            <h5 class="card-title">{{animal.shelter.name}}</h5>
+            <a [routerLink]="['/shelters', animal.shelter.id]" class="btn btn-koda-pink">Ver protectora</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <hr class="text-koda-imperial">
+
+    <div>
+      <h2>Detalles</h2>
+      <div class="m-2">
+        <i *ngIf="animal.animal_type==='dog'" class="fa-solid fa-dog text-koda-imperial"></i>
+        <i *ngIf="animal.animal_type==='cat'" class="fa-solid fa-cat text-koda-imperial"></i>
+        <i *ngIf="animal.animal_type==='bird'" class="fa-solid fa-feather-pointed text-koda-imperial"></i>
+        <i *ngIf="animal.animal_type==='rodent'" class="fa-solid fa-cheese text-koda-imperial"></i>
+        <span class="ms-2"><strong>Raza:</strong> {{animal.breed}}</span>
+      </div>
+      <div class="m-2">
+        <i class="fa-solid fa-mars-and-venus text-koda-imperial"></i>
+        <span class="ms-2"><strong>Sexo:</strong> {{animalGender}}</span>
+      </div>
+      <div class="m-2">
+        <i class="fa-solid fa-cake-candles text-koda-imperial"></i>
+        <span class="ms-2"><strong>Fecha de nacimiento:</strong> {{animal.date_birth}}</span>
+      </div>
+    </div>
+
+    <hr class="text-koda-imperial">
+
+    <div>
+      <h2>Descripción</h2>
+      <p>{{animal.description}}</p>
+    </div>
+
+    <div *ngIf="isAdmin || isShelter">
+      <hr class="text-koda-imperial">
+
+      <button class="btn btn-koda-pink m-2" (click)="openEditModal(editModal)">Editar</button>
+      <button class="btn btn-koda-red text-koda-light m-2" (click)="openDeleteModal(deleteModal)">Eliminar</button>
+
+      <ng-template #editModal>
+        <div class="modal-header">
+          <h4 class="modal-title pull-left">Editar Animal</h4>
+          <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="editModalRef?.hide()">
+            <span aria-hidden="true" class="visually-hidden">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="editForm" class="needs-validation" novalidate (ngSubmit)="onSubmit()">
+            <div class="mb-3">
+              <label for="name" class="form-label">Nombre del animal</label>
+              <input type="text" formControlName="name" class="form-control" id="name" [class.is-invalid]="f['name'].errors">
+              <div *ngIf="f['name'].invalid && (f['name'].dirty || f['name'])" class="mt-2 text-danger">
+                <small *ngIf="f['name'].errors?.['required']">
+                  El nombre es requerido
+                </small>
+                <small *ngIf="f['name'].errors?.['minlength']">
+                  Debe tener mínimo 3 caracteres
+                </small>
+                <small *ngIf="f['name'].errors?.['pattern']">
+                  Formato inválido
+                </small>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="animalType" class="form-label">Tipo de animal</label>
+              <select formControlName="animalType" class="form-select" id="animalType" [class.is-invalid]="f['animalType'].errors">
+                <option value="dog">Perro</option>
+                <option value="cat">Gato</option>
+                <option value="bird">Ave</option>
+                <option value="rodent">Roedor</option>
+              </select>
+              <div *ngIf="f['animalType'].invalid && (f['animalType'].dirty || f['animalType'])" class="mt-2 text-danger">
+                <small *ngIf="f['animalType'].errors?.['required']">
+                  El tipo de animal es requerido
+                </small>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="breed" class="form-label">Raza</label>
+              <input type="text" formControlName="breed" class="form-control" id="breed" [class.is-invalid]="f['breed'].errors">
+              <div *ngIf="f['breed'].invalid && (f['breed'].dirty || f['breed'])" class="mt-2 text-danger">
+                <small *ngIf="f['breed'].errors?.['required']">
+                  La raza es requerida
+                </small>
+                <small *ngIf="f['breed'].errors?.['minlength']">
+                  Debe tener mínimo 3 caracteres
+                </small>
+                <small *ngIf="f['breed'].errors?.['pattern']">
+                  Formato inválido
+                </small>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="gender" class="form-label">Género</label>
+              <select class="form-select" formControlName="gender" id="gender" [class.is-invalid]="f['gender'].errors">
+                <option value="male">Macho</option>
+                <option value="female">Hembra</option>
+              </select>
+              <div *ngIf="f['gender'].invalid && (f['gender'].dirty || f['gender'])" class="mt-2 text-danger">
+                <small *ngIf="f['gender'].errors?.['required']">
+                  El género es requerido
+                </small>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="dateBirth" class="form-label">Fecha de nacimiento</label>
+              <input type="date" formControlName="dateBirth" class="form-control" id="dateBirth" [class.is-invalid]="f['dateBirth'].errors">
+              <div *ngIf="f['dateBirth'].invalid && (f['dateBirth'].dirty || f['dateBirth'])" class="mt-2 text-danger">
+                <small *ngIf="f['dateBirth'].errors?.['required']">
+                  La fecha de nacimiento es requerida
+                </small>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="photo" class="form-label">Foto (url)</label>
+              <input type="url" formControlName="photo" class="form-control" id="photo">
+            </div>
+            <div class="mb-3">
+              <label for="description" class="form-label">Descripción</label>
+              <textarea class="form-control" formControlName="description" id="description" style="height: 10rem" [class.is-invalid]="f['description'].errors"></textarea>
+              <div *ngIf="f['description'].invalid && (f['description'].dirty || f['description'])" class="mt-2 text-danger">
+                <small *ngIf="f['description'].errors?.['required']">
+                  La descripción es requerida
+                </small>
+                <small *ngIf="f['description'].errors?.['minlength']">
+                  Debe tener mínimo 10 caracteres
+                </small>
+                <small *ngIf="f['description'].errors?.['maxlength']">
+                  Debe tener máximo 600 caracteres
+                </small>
+              </div>
+            </div>
+
+            <div class="d-flex justify-content-end">
+              <button type="submit" class="btn btn-koda-red text-koda-light">Aceptar</button>
+            </div>
+          </form>
+        </div>
+      </ng-template>
+
+      <ng-template #deleteModal>
+        <div class="modal-body text-center">
+          <p>¿Seguro que quiere eliminar el animal?</p>
+          <button type="button" class="btn btn-default" (click)="confirmDelete()">Sí</button>
+          <button type="button" class="btn btn-koda-red text-koda-light" (click)="deleteModalRef?.hide()">No</button>
+        </div>
+      </ng-template>
+    </div>
+  </ng-template>
+</div>

@@ -1,0 +1,41 @@
+<div class="container">
+    <app-loader *ngIf="!hasLoaded; else sheltersPage" class="d-flex justify-content-center"></app-loader>
+    <ng-template #sheltersPage>
+        <div class="d-flex flex-column">
+            <div class="row d-flex align-items-center justify-content-center">
+                <div class="container d-flex justify-content-center">
+                    <div class="bg-koda-pink-custom text-white text-center rounded m-2 p-3" style="width: 80vh;">
+                        <form [formGroup]="searchForm" (ngSubmit)="onSubmit()" class="row">
+                            <div class="col-5">
+                                <ng-select [items]="sheltersList"
+                                formControlName="shelter"
+                                bindLabel="name"
+                                placeholder="Nombre de protectora"
+                                ></ng-select>
+                            </div>
+                            <div class="col-5">
+                                <ng-select [items]="cities"
+                                formControlName="city"
+                                bindLabel="name"
+                                placeholder="Ciudad"
+                                ></ng-select>
+                            </div>
+                            <div class="col-2">
+                                <button type="submit" class="btn btn-koda-light">Buscar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="row d-flex justify-content-center m-3">
+                <app-shelter-card class="col d-flex mt-2 mb-2" *ngFor="let shelter of shelters" [shelter]="shelter"></app-shelter-card>
+                <div class="d-flex justify-content-center m-2">
+                    <pagination [totalItems]="totalShelters" [itemsPerPage]="pageSize" 
+                        previousText="&lsaquo;" nextText="&rsaquo;"
+                        (pageChanged)="pageChanged($event)"
+                    ></pagination>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+</div>

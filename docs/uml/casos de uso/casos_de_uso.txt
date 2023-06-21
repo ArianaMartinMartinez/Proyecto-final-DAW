@@ -1,0 +1,20 @@
+@startuml
+:Adoptante: -up-> (Ver Animales)
+:Adoptante: -up-> (Guardar favorito)
+:Adoptante: -up-> (Editar perfil)
+
+:Protectora: --> (Ver Animales)
+:Protectora: --> (Editar perfil)
+:Protectora: --> (Editar protectora)
+:Protectora: --> (Guardar favorito)
+:Protectora: --> (Crear sus animales)
+:Protectora: --> (Editar sus animales)
+:Protectora: --> (Borrar sus animales)
+
+:Admin: --> (Ver Animales)
+:Admin: --> (Guardar favorito)
+:Admin: --> (Editar protectora)
+:Admin: --> (Crear cualquier animal)
+:Admin: --> (Editar cualquier animal)
+:Admin: --> (Borrar cualquier animal)
+@enduml

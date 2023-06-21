@@ -1,0 +1,22 @@
+<div class="background-image d-flex align-items-center justify-content-center">
+    <div class="container d-flex justify-content-center">
+        <div class="bg-koda-pink-custom text-center rounded m-2 p-3" style="width: 80vh;">
+            <h3>No compres, <strong class="text-koda-red">¡adopta!</strong></h3>
+        </div>
+    </div>
+</div>
+
+<div>
+    <h3 class="text-center m-4">Últimos animales en adopción</h3>
+    <div class="container">
+        <app-loader *ngIf="!hasLoaded" class="d-flex justify-content-center"></app-loader>
+        <div class="row d-flex justify-content-center">
+            <app-animal-card class="col d-flex mt-2 mb-2" 
+                *ngFor="let animal of animals" 
+                [photo]="animal.photo" [name]="animal.name" [city]="animal.shelter.city.name" 
+                [id]="animal.id" [isFavorite]="favorites.includes(animal.id)" [animalType]="animal.animal_type"
+                (favoriteSelected)="setFavorite($event)"
+            ></app-animal-card>
+        </div>
+    </div>
+</div>

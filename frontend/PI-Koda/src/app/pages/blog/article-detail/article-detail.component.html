@@ -1,0 +1,13 @@
+<div class="container">
+    <app-loader *ngIf="!hasLoaded" class="d-flex justify-content-center"></app-loader>
+    <div>
+        <h2 class="text-center mb-3">{{article.title}}</h2>
+
+        <hr class="text-koda-red">
+
+        <div class="d-flex flex-column justify-content-center align-items-center">
+            <img src="{{photo}}" height="200" alt="Foto del artículo"/>
+            <p>{{article.description}}</p>
+        </div>
+    </div>
+</div>

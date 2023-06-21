@@ -1,0 +1,87 @@
+<div class="d-flex flex-column justify-content-between align-items-center">
+  <h3 class="mb-5 text-koda-red">Registrarse</h3>
+  <form *ngIf="!isShelterRegister" [formGroup]="registerForm" class="needs-validation" novalidate (ngSubmit)="onSubmitAdopter()">
+      <div class="mb-3">
+        <label for="name" class="form-label">Nombre</label>
+        <input type="text" formControlName="name" class="form-control" id="name" [class.is-invalid]="f['name'].errors && submitted">
+        <div *ngIf="submitted && f['name'].invalid && (f['name'].dirty || f['name'])" class="mt-2 text-danger">
+          <small *ngIf="f['name'].errors?.['required']">
+            El nombre es requerido
+          </small>
+          <small *ngIf="f['name'].errors?.['minlength']">
+            Debe tener mínimo 3 caracteres
+          </small>
+          <small *ngIf="f['name'].errors?.['pattern']">
+            Formato inválido
+          </small>
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="emailReg" class="form-label">Correo electrónico</label>
+        <input type="text" formControlName="email" class="form-control" id="emailReg" [class.is-invalid]="f['email'].errors && submitted">
+        <div *ngIf="submitted && f['email'].invalid && (f['email'].dirty || f['email'])" class="mt-2 text-danger">
+          <small *ngIf="f['email'].errors?.['required']">
+            El email es requerido
+          </small>
+          <small *ngIf="f['email'].errors?.['email']">
+            Formato inválido
+          </small>
+        </div>
+      </div>
+      <div class="mb-3">
+          <label for="passwordReg" class="form-label">Contraseña</label>
+          <input type="password" formControlName="password" class="form-control" id="passwordReg" [class.is-invalid]="f['password'].errors && submitted">
+          <div *ngIf="submitted && f['password'].invalid && (f['password'].dirty || f['password'])" class="mt-2 text-danger">
+            <small *ngIf="f['password'].errors?.['required']">
+              La contraseña es requerida
+            </small>
+          </div>
+        </div>
+      <button type="submit" class="btn btn-koda-red text-koda-light">Aceptar</button>
+  </form>
+
+  <form *ngIf="isShelterRegister" [formGroup]="registerForm" class="needs-validation" novalidate (ngSubmit)="onSubmitShelter()">
+    <div class="mb-3">
+      <label for="name" class="form-label">Administrador de la protectora</label>
+      <input type="text" formControlName="name" class="form-control" id="name" [class.is-invalid]="f['name'].errors && submitted">
+      <div *ngIf="submitted && f['name'].invalid && (f['name'].dirty || f['name'])" class="mt-2 text-danger">
+        <small *ngIf="f['name'].errors?.['required']">
+          El nombre es requerido
+        </small>
+        <small *ngIf="f['name'].errors?.['minlength']">
+          Debe tener mínimo 3 caracteres
+        </small>
+        <small *ngIf="f['name'].errors?.['pattern']">
+          Formato inválido
+        </small>
+      </div>
+    </div>
+    <div class="mb-3">
+      <label for="emailReg" class="form-label">Correo electrónico administrador</label>
+      <input type="text" formControlName="email" class="form-control" id="emailReg" [class.is-invalid]="f['email'].errors && submitted">
+      <div *ngIf="submitted && f['email'].invalid && (f['email'].dirty || f['email'])" class="mt-2 text-danger">
+        <small *ngIf="f['email'].errors?.['required']">
+          El email es requerido
+        </small>
+        <small *ngIf="f['email'].errors?.['email']">
+          Formato inválido
+        </small>
+      </div>
+    </div>
+    <div class="mb-3">
+      <label for="passwordReg" class="form-label">Contraseña administrador</label>
+      <input type="password" formControlName="password" class="form-control" id="passwordReg" [class.is-invalid]="f['password'].errors && submitted">
+      <div *ngIf="submitted && f['password'].invalid && (f['password'].dirty || f['password'])" class="mt-2 text-danger">
+        <small *ngIf="f['password'].errors?.['required']">
+          La contraseña es requerida
+        </small>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-koda-red text-koda-light">Aceptar</button>
+  </form>
+
+  <div class="mt-4 text-koda-imperial" style="cursor: pointer;">
+    <p (click)="changeRegister()" *ngIf="!isShelterRegister" class="border-bottom border-koda-imperial">Soy protectora</p>
+    <p (click)="changeRegister()" *ngIf="isShelterRegister" class="border-bottom border-koda-imperial">Soy adoptante</p>
+  </div>
+</div>

@@ -1,0 +1,82 @@
+/* You can add global styles to this file, and also import other style files */
+@import '~bootstrap/dist/css/bootstrap.css';
+/* Importing Bootstrap SCSS file. */
+@import "./node_modules/bootstrap/scss/bootstrap";
+
+/* Importing Datepicker SCSS file. */
+@import "node_modules/ngx-bootstrap/datepicker/bs-datepicker";
+
+@import "~@ng-select/ng-select/themes/default.theme.css";
+
+html, body{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    min-height: 100vh;
+    text-align: justify;
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 15px;
+}
+  
+/* Track */
+::-webkit-scrollbar-track {
+  background: #fff1f2;
+  border-radius: 10px;
+}
+   
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #e44d4d;
+  border-radius: 10px;
+}
+  
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #b03333;
+}
+
+.bg-koda-light, .btn-koda-light {
+  background-color: #fff1f2;
+}
+.bg-koda-pink, .btn-koda-pink {
+  background-color: #ff7d7d;
+}
+.bg-koda-imperial, .btn-koda-imperial {
+  background-color: #e44d4d;
+}
+.bg-koda-red, .btn-koda-red {
+  background-color: #b03333;
+}
+
+.text-koda-light {
+  color: #fff1f2;
+}
+.text-koda-pink {
+  color: #ff7d7d;
+}
+.text-koda-imperial {
+  color: #e44d4d;
+}
+.text-koda-red {
+  color: #b03333;
+}
+
+.btn-koda-light:hover {
+  background-color: #fae4e7;
+}
+.btn-koda-pink:hover {
+  background-color: #fc9c9c;
+}
+.btn-koda-imperial:hover {
+  background-color: #e26464;
+}
+.btn-koda-red:hover {
+  background-color: #c93b3b;
+}
+
+a:hover{
+  color: black;
+}

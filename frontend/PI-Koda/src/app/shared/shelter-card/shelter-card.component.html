@@ -1,0 +1,11 @@
+<div class="card border-koda-imperial" style="width: 18rem;">
+    <img src="{{photo}}" class="card-img-top" height="200" alt="Foto de la protectora">
+    <div class="card-body">
+      <h5 class="card-title text-center">{{shelter.name}}</h5>
+      <div>
+        <i class="fa-solid fa-location-dot text-koda-red"></i>
+        <span class="card-text m-2">{{shelter.city.name}}</span>
+      </div>
+   <a [routerLink]="['/shelters', shelter.id]" class="btn btn-koda-red text-koda-light mt-3">Más información</a>
+    </div>
+</div>
